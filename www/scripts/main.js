@@ -7,9 +7,13 @@ var	database;
 var	roomRef;
 var	user;
 
-window.addEventListener("beforeunload", function(args)	{
+window.onbeforeunload=	function()	{
 	roomRef.child(uuid).remove();
-});
+};
+
+window.unload=	function()	{
+	roomRef.child(uuid).remove();
+};
 
 $(document).ready(function(){
 	
