@@ -24,6 +24,8 @@ $(document).ready(function(){
         "<br>Heading: " + pos.coords.heading +
         "<br>TimeStamp: " + pos.timestamp;
         $("#currentLocation").html(posHTML);
+		
+		console.log(map);
 
         //google Maps work here *************************************
         userPosition = new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
@@ -32,8 +34,8 @@ $(document).ready(function(){
         userMarker.setMap(null);
         userMarker = new google.maps.Marker({position: userPosition});
         userMarker.setMap(map);
-        // ************************************************************ 
-
+        // ************************************************************
+		console.log(userMarker);
     }
 
     function showError(error) {
