@@ -8,26 +8,36 @@ $(document).ready(function(){
 //Make the map a global var
 var map;
 var defaultPostion;
-var userMarker;
+var userMarkers;
 
 function startupMap(_user)	{
 	map.setCenter(new google.maps.LatLng(
-		user.lat, user.lon
+		_user.lat, _user.lon
 	));
 }
 
 function updateMap(_user)	{
-	userMarker.setMap(null);
-	userMarker=	new google.maps.Marker({
-		position:	new google.maps.LatLng(_user.lat, _user.lon)
+	if(userMarkers[_user.id])
+		userMarkers[_user.id].setMap(null);
+	userMarkers[_user.id]=	new google.maps.Marker({
+		new google.maps.LatLng(_user.lat, _user.lon)
 	});
-	userMarker.setMap(map);
+	userMarkers[_user.id].setMap(map);
+}
+
+function deleteFromMap(_user)	{
+	if(!userMarkers[_user.id])
+		return;
+	userMarkers[_user.id].setMap(null);
+	userMarkers[_user.id]=	null;
+	delete userMarkers[_user.id];
 }
 
 function myMap() {
     //cos default
 	defaultPosition = new google.maps.LatLng(36.3251,-119.3150);
-	userMarker = new google.maps.Marker({position: defaultPosition});
+	userMarkers=	{};
+	//userMarker = new google.maps.Marker({position: defaultPosition});
 	
 	var mapProp = {
 		center: defaultPosition,
@@ -37,5 +47,5 @@ function myMap() {
 	map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
 	/* TODO: Add the marker dynamically */
-	userMarker.setMap(map);
+	//userMarker.setMap(map);
 }

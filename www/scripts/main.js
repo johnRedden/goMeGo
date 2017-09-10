@@ -13,6 +13,7 @@ $(document).ready(function(){
 		database=	firebase.database();
 		navigator.geolocation.getCurrentPosition(setPos);
 		navigator.geolocation.watchPosition(updatePos);
+		console.log("App Enabled");
 	}
 	else	{
 		alert("App Disabled. Please activate your location to use.");
@@ -29,11 +30,12 @@ $(document).ready(function(){
 	function setPos(args)	{
 		uuid=	localStorage.getItem("uuid") || (function()	{
 			// Variables
-			var	uuid=	guuid();
-			localStorage.setItem("uuid", uuid);
-			return uuid;
+			var	_uuid=	guuid();
+			localStorage.setItem("uuid", _uuid);
+			return _uuid;
 		})();
 		user=	{
+			id:	uuid,
 			lat:	args.coords.latitude,
 			lon:	args.coords.longitude,
 			timestamp:	args.timestamp
