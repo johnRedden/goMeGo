@@ -20,9 +20,10 @@ function updateMap(_user)	{
 	if(userMarkers[_user.id])
 		userMarkers[_user.id].setMap(null);
 	userMarkers[_user.id]=	new google.maps.Marker({
-		new google.maps.LatLng(_user.lat, _user.lon)
+		position:	new google.maps.LatLng(_user.lat, _user.lon)
 	});
 	userMarkers[_user.id].setMap(map);
+	console.log(userMarkers);
 }
 
 function deleteFromMap(_user)	{

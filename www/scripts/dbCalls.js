@@ -6,6 +6,7 @@ function onChildAdded(snapshot, prevChildKey)	{
 
 function onChildChanged(snapshot)	{
 	updateMap(snapshot.toJSON());
+	console.log(snapshot.toJSON().id+" changed");
 }
 
 function onChildRemoved(snapshot)	{
