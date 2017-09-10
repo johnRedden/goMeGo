@@ -7,6 +7,10 @@ var	database;
 var	roomRef;
 var	user;
 
+window.addEventListener("beforeunload", function(args)	{
+	roomRef.child(uuid).remove();
+});
+
 $(document).ready(function(){
 	
 	if(navigator.geolocation)	{
