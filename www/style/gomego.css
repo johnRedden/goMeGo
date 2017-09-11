@@ -1,8 +1,26 @@
 
 
+#initContainer{
+    width:90%;
+    margin-top: 30px;
+    background-color: oldlace;
+    position:relative;
+    z-index:10;
+    padding: 10px;
+}
+
+#userHashTag{
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 #googleMap{
     width:100%;
-    height:400px;
+    height:100%;
+      position: absolute;
+  top: 0;
+  left: 0;
+    z-index:1;
 }
 

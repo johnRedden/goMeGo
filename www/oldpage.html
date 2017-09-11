@@ -16,33 +16,32 @@
 <body>
 	
     <div class="container">
+        <h1>GoMeGo Tracker</h1>
+        <p> <strong>Project Proposal</strong> - Real time location tracker using Google Maps api and Firebase.
+            Think of this as a chat app... chat rooms for real-time location.  To use HTML5 to 
+            bypass app stores and serve as a true web-app!  No sign-in and nothing to download or install... it just works!
+        </p>
+        <button id="getLocationBtn" class="btn btn-default">Watch Current Location</button>
+        <div> Location data will never be stored or shared: </div>
 
-        <div id="initContainer" class="text-center">
-            <h1>GoMeGo.me</h1>
-            
-            <input id="userHashTag" class="form-control"  placeholder="#hashTag">
-            <p> Real-time hashtag based location sharing.</p>
-            <button id="copyButton" class="btn btn-default">Copy Link and Go</button>
-            <br><br>
-            <p><em>Simply type in a hashtag, then copy and paste the link. <br><br>
-                
-                [ information ] [ advanced ] <br><br>
+        <div id="currentLocation" class="well">Location Data Here</div>
+        <div id="currentHeading" class="well">Compass Heading Here</div>
 
-                Location and internet must be enabled.<br>
-                GoMeGo.me does not store location data beyond your session.</em><br>
-                
-            </p>
+        <br>
+        <div id="urlInput" class="input-group" style="width:100%;" >
+            <label for="userHashTag">Custom Hash: </label>
+            <input id="userHashTag" class="form-control" placeholder="#hashTag"></input>
+            <input id="copyTarget" class="form-control" readonly></input>
+            <button id="copyButton" class="btn btn-default">Copy Link</button>
         </div>
+        <br>
 
-        <div id="mapContainer">
-            <div id="googleMap"></div>
-        </div>
-        
-        <div id="adContainer"> 
-            Ad supported site 
-        </div>
+        <div> We will use Google Maps API </div>
+        <div id="googleMap"></div>
+        <div> Oh yeah, this is gonna be cool! </div>
 
     </div>
+
 
     <!-- TODO hide this api key and restrict it in the API dashboard -->
 	<script src="scripts/dbCalls.js"></script>

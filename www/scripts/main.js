@@ -17,6 +17,8 @@ window.unload=	function()	{
 
 $(document).ready(function(){
 	
+
+	/*
 	if(navigator.geolocation)	{
 		database=	firebase.database();
 		navigator.geolocation.getCurrentPosition(setPos);
@@ -27,7 +29,7 @@ $(document).ready(function(){
 		alert("App Disabled. Please activate your location to use.");
 		return;
 	}
-	
+	*/
 	function updatePos(args)	{
 		user.lat=	args.coords.latitude;
 		user.lon=	args.coords.longitude;
@@ -99,7 +101,10 @@ $(document).ready(function(){
     $("#copyButton").click(function(){
         try{
             $("#copyTarget").select();
-            document.execCommand('copy');
+			document.execCommand('copy');
+			
+			$("#initContainer").hide();
+			
         }catch(e){
             alert(e);
         }
