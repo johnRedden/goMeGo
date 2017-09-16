@@ -23,6 +23,8 @@ function updateMap(_user)	{
 		position:	new google.maps.LatLng(_user.lat, _user.lon)
 	});
 	userMarkers[_user.id].setMap(map);
+	if(user== _user)
+    	roomRef.child(_user.id).set(_user);
 	console.log(userMarkers);
 }
 
