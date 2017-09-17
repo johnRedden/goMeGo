@@ -1,6 +1,6 @@
 
 function onChildAdded(snapshot, prevChildKey)	{
-	updateMap(user);
+	//updateMap(user);
 	updateMap(snapshot.toJSON());
 }
 
