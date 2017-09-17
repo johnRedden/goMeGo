@@ -25,7 +25,7 @@ function updateMap(_user)	{
 	userMarkers[_user.id].setMap(map);
 	if(user== _user)
     	roomRef.child(_user.id).set(_user);
-	console.log(userMarkers);
+	//console.log(userMarkers);
 }
 
 function deleteFromMap(_user)	{
