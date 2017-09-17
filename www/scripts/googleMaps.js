@@ -20,7 +20,9 @@ function updateMap(_user)	{
 	if(userMarkers[_user.id])
 		userMarkers[_user.id].setMap(null);
 	userMarkers[_user.id]=	new google.maps.Marker({
-		position:	new google.maps.LatLng(_user.lat, _user.lon)
+		position:	new google.maps.LatLng(_user.lat, _user.lon),
+		icon: user.id===_user.id?'images/pacman.png':'' //local user gets pacman otherwise default
+		
 	});
 	userMarkers[_user.id].setMap(map);
 	if(user== _user)
