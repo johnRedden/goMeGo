@@ -2,6 +2,13 @@
 function onChildAdded(snapshot, prevChildKey)	{
 	//updateMap(user);
 	updateMap(snapshot.toJSON());
+
+	//Adjust bounding box 
+	userMarkers.forEach(function (Marker) {
+      bounds.extend(Marker.getPosition());
+    });
+    
+    map.fitBounds(bounds);
 }
 
 function onChildChanged(snapshot)	{

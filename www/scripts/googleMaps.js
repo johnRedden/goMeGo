@@ -9,7 +9,7 @@ $(document).ready(function(){
 var map;
 var defaultPostion;
 var userMarkers;
-
+var bounds = new google.maps.LatLngBounds();
 function startupMap(_user)	{
 	map.setCenter(new google.maps.LatLng(
 		_user.lat, _user.lon
