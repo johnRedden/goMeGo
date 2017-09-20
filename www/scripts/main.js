@@ -1,20 +1,27 @@
 //GoMeGo Start Globals
 var	user, uuid, roomHash;
 var	database, roomRef;
-
-window.onbeforeunload=	function()	{
-	roomRef.child(uuid).remove();
-};
-
-window.unload=	function()	{
-	roomRef.child(uuid).remove();
-};
+var	isMobile;
 
 $(document).ready(function(){
 
 	var URL = window.location.href;
-	var hashTag = window.location.hash; 
+	var hashTag = window.location.hash;
 	
+	isMobile=	(/(android|ipad|iphone|ipod)/i).test(navigator.userAgent);
+	
+	if(isMobile)	{
+		alert("You are Mobile!");
+		window.addEventListener("beforeunload", function()	{
+			roomRef.child(uuid).remove();
+		});
+	}
+	else	{
+		window.addEventListener("beforeunload", function()	{
+			roomRef.child(uuid).remove();
+			return ("You are leaving the room!");
+		});
+	}
 	if(hashTag)	{ //coming in with room hash
 		database=	firebase.database(); 
 		roomHash=	window.location.hash.substring(1);
