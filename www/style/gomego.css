@@ -36,3 +36,31 @@
     z-index:1;
 }
 
+#skipAdSpot	{
+	float:	left;
+	width:	25%;
+	/* Delete Me Later */
+	text-align:	center;
+	background:	red;
+}
+
+#skipAd	{
+	width:	100%;
+}
+
+#smallAdSpot	{
+	float:	left;
+	width:	75%;
+	height:	32px;
+	/* Delete Me Later */
+	text-align:	center;
+	background:	green;
+}
+
+#largeAdSpot	{
+	width:	100%;
+	/* Delete Me Later */
+	text-align:	center;
+	background:	blue;
+}
+

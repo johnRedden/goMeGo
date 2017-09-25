@@ -38,7 +38,7 @@ function deleteFromMap(_user)	{
 	delete userMarkers[_user.id];
 }
 
-function myMap() {
+function createMap() {
     //cos default
 	defaultPosition = new google.maps.LatLng(36.3251,-119.3150);
 	userMarkers=	{};
