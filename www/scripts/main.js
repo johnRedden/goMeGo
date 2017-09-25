@@ -63,6 +63,7 @@ $(document).ready(function(){
 				location.hash=	$("#userHashTag").val();
 				roomHash=	window.location.hash.substring(1);
 				
+				$("#copyTarget").val(window.location.href);
 				$("#copyTarget").select();
 				document.execCommand('copy', true);
 				
@@ -80,7 +81,7 @@ $(document).ready(function(){
 			roomHash = $(this).val().substring(1);
 			//window.location.hash=	roomHash;
 
-			$("#copyTarget").val(window.location.href);
+			$("#copyTarget").val(location.href);
 
 		});
 
