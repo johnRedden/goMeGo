@@ -6,7 +6,6 @@ $(document).ready(function(){
     //position.coords.heading does not seem to work... try this
 
     //heading currently not being used
-    /*
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', deviceOrientationHandler, true)
     }
@@ -15,19 +14,21 @@ $(document).ready(function(){
 
         if (event.webkitCompassHeading) {
             //mobile safari
-            headingHTML = "<br>Device Orientation Heading WebKit: " + event.webkitCompassHeading ;
+            //headingHTML = "<br>Device Orientation Heading WebKit: " + event.webkitCompassHeading ;
+            heading = event.webkitCompassHeading;
             
         } else {
             if (!event.alpha) 
-                headingHTML = "<br>No Device Orientation: ";
+                heading = 0;
+                //headingHTML = "<br>No Device Orientation: ";
             else
-                headingHTML = "<br>Device Orientation Heading: " + event.alpha ;
+                heading = event.alpha;
+                //headingHTML = "<br>Device Orientation Heading: " + event.alpha ;
         }
 
-       // $("#currentHeading").html(headingHTML);
+       $("#info").html(heading);
     }
 
-    */
 
 
 });
