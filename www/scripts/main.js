@@ -7,26 +7,8 @@ $(document).ready(function(){
 
 	var URL = window.location.href;
 	var hashTag = window.location.hash;
-	var	currAdOrientation=	localStorage.getItem("adOrientation") || "left"; // Creates a new or gets the previous orientation of the ad
-	
-	// Switches the orientation around
-	// If the orientation is left, swap it to right. If it's right then swap it to left
-	currAdOrientation=	((currAdOrientation=== "left") ? "right" : "left");
-	// Sets it for the next time
-	localStorage.setItem("adOrientation", currAdOrientation);
-	
-	// Floats the objects to appear on the left or the right
-	$("#skipAdSpot").css("float", currAdOrientation);
-	$("#smallAdSpot").css("float", currAdOrientation);
 	
 	isMobile=	(/(android|ipad|iphone|ipod)/i).test(navigator.userAgent);
-	
-	$("#skipAd").click(function()	{
-		$("#mapContainer").show();
-		$("#adContainer").hide();
-		createMap();
-		startGPS();
-	});
 	
 	if(isMobile)	{
 		alert("You are Mobile!");
@@ -43,10 +25,8 @@ $(document).ready(function(){
 	if(hashTag)	{ //coming in with room hash
 		database=	firebase.database(); 
 		roomHash=	window.location.hash.substring(1);
-		console.log("why???????");
 		$("#initContainer").hide();
-		openAdSpace();
-
+		startGPS();
 	}else{ //coming in without room hash
 		//show auto generated link
 		roomHash=	gurid();
@@ -88,11 +68,6 @@ $(document).ready(function(){
 	}
 
 });
-
-function openAdSpace(startGPSEvent)	{
-	$("#adContainer").show();
-	$("#mapContainer").hide();
-}
 
 // Generate unique room id
 function gurid()	{
