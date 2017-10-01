@@ -18,9 +18,9 @@ $(document).ready(function(){
             if (!event.alpha) 
                 heading = 0;
             else
-                heading = event.alpha;
+                heading = event.alpha*-1;
         }
-
+        
        $("#info").html(heading);
        if(user)
         userMarkers[user.id].icon.rotation = heading;
