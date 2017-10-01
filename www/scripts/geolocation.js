@@ -5,38 +5,39 @@ $(document).ready(function(){
     //HTML5 Geolocation ( https://www.w3schools.com/html/html5_geolocation.asp )
     //position.coords.heading does not seem to work... try this
 
-    //heading currently not being used
+    //heading watching here currently not being used
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', deviceOrientationHandler, true)
     }
 
     function deviceOrientationHandler(event) {
 
-        if (event.webkitCompassHeading) {
-            //mobile safari
-            //headingHTML = "<br>Device Orientation Heading WebKit: " + event.webkitCompassHeading ;
+        if (event.webkitCompassHeading) {//mobile safari
             heading = event.webkitCompassHeading;
-            
         } else {
             if (!event.alpha) 
                 heading = 0;
-                //headingHTML = "<br>No Device Orientation: ";
             else
                 heading = event.alpha;
-                //headingHTML = "<br>Device Orientation Heading: " + event.alpha ;
         }
 
        $("#info").html(heading);
+       if(user)
+        userMarkers[user.id].icon.rotation = heading;
     }
-
-
 
 });
 
+/* Position Watching Options here *************************   */
+posOptions = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 500  //update every half second **I think**
+};
 function startGPS() {
 	if(navigator.geolocation)	{
 		navigator.geolocation.getCurrentPosition(setPos);
-		navigator.geolocation.watchPosition(updatePos);
+		navigator.geolocation.watchPosition(updatePos,errorPos,posOptions);
 		console.log("App Enabled");
 	}
 	else	{
@@ -44,6 +45,7 @@ function startGPS() {
 		return;
     }
 }
+function errorPos(){}
 function updatePos(args)	{
     if(user.lat== args.coords.latitude && user.lon== args.coords.longitude)
         return;
