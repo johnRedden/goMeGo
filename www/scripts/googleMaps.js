@@ -42,6 +42,12 @@ function updateMap(_user)	{
 	//console.log(userMarkers);
 }
 
+function updateIconPosForUser(_user){
+	//just set the new position for the marker
+	userMarkers[_user.id].setPosition(new google.maps.LatLng(_user.lat, _user.lon));
+
+}
+
 function deleteFromMap(_user)	{
 	if(!userMarkers[_user.id])
 		return;

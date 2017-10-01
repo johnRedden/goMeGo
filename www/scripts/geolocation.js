@@ -22,8 +22,12 @@ $(document).ready(function(){
         }
         
        $("#info").html(heading);
-       if(user)
-        userMarkers[user.id].icon.rotation = heading;
+       if(user){
+           //set icon rotation in real time with heading
+           userMarkers[user.id].icon.rotation = heading;
+           userMarkers[user.id].setIcon(userMarkers[user.id].icon);
+       }
+        
     }
 
 });
@@ -52,7 +56,7 @@ function updatePos(args)	{
     user.lat=	args.coords.latitude;
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
-    updateMap(user);
+    updateIconPosForUser(user);
 }
 
 function setPos(args)	{
