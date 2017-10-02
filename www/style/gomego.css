@@ -8,6 +8,14 @@
     z-index:10;
     padding: 10px;
 }
+#infoContainer{
+    width:90%;
+    margin-top: 5px;
+    background-color: oldlace;
+    position:relative;
+    z-index:11;
+    padding: 10px;
+}
 #copyButton{
     background-color: lightgreen;
     color: white;

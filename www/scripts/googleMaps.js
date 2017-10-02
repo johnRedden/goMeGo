@@ -23,15 +23,32 @@ function startupMap(_user)	{
 function updateMap(_user)	{
 	if(userMarkers[_user.id])
 		userMarkers[_user.id].setMap(null);
+	
 	userMarkers[_user.id]=	new google.maps.Marker({
 		position:	new google.maps.LatLng(_user.lat, _user.lon),
-		icon: user.id===_user.id?'images/pacman.png':'' //local user gets pacman otherwise default
+		icon: {
+			//local user gets arrow and blue
+			//helpful icon reference: https://developers.google.com/maps/documentation/javascript/3.exp/reference#Icon
+			path: user.id===_user.id?google.maps.SymbolPath.FORWARD_CLOSED_ARROW:google.maps.SymbolPath.CIRCLE,
+			scale: 6,
+			rotation: heading,
+			strokeColor: user.id===_user.id?'blue':'red',
+			strokeWeight: 4
+		}
 		
+		//user.id===_user.id?'images/pacman.png#pacman':'', //local user gets pacman otherwise default	
 	});
+	
 	userMarkers[_user.id].setMap(map);
 	if(user== _user)
     	roomRef.child(_user.id).set(_user);
 	//console.log(userMarkers);
+}
+
+function updateIconPosForUser(_user){
+	//just set the new position for the marker
+	userMarkers[_user.id].setPosition(new google.maps.LatLng(_user.lat, _user.lon));
+
 }
 
 function deleteFromMap(_user)	{
@@ -60,3 +77,4 @@ function createMap() {
 	/* TODO: Add the marker dynamically */
 	//userMarker.setMap(map);
 }
+

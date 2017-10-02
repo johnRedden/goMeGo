@@ -5,37 +5,43 @@ $(document).ready(function(){
     //HTML5 Geolocation ( https://www.w3schools.com/html/html5_geolocation.asp )
     //position.coords.heading does not seem to work... try this
 
-    //heading currently not being used
-    /*
+    //heading watching here currently not being used
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', deviceOrientationHandler, true)
     }
 
     function deviceOrientationHandler(event) {
 
-        if (event.webkitCompassHeading) {
-            //mobile safari
-            headingHTML = "<br>Device Orientation Heading WebKit: " + event.webkitCompassHeading ;
-            
+        if (event.webkitCompassHeading) {//mobile safari
+            heading = event.webkitCompassHeading;
         } else {
             if (!event.alpha) 
-                headingHTML = "<br>No Device Orientation: ";
+                heading = 0;
             else
-                headingHTML = "<br>Device Orientation Heading: " + event.alpha ;
+                heading = event.alpha*-1;
         }
-
-       // $("#currentHeading").html(headingHTML);
+        
+       $("#info").html(heading);
+       if(user){
+           //set icon rotation in real time with heading
+           userMarkers[user.id].icon.rotation = heading;
+           userMarkers[user.id].setIcon(userMarkers[user.id].icon);
+       }
+        
     }
-
-    */
-
 
 });
 
+/* Position Watching Options here *************************   */
+posOptions = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 500  //update every half second **I think**
+};
 function startGPS() {
 	if(navigator.geolocation)	{
 		navigator.geolocation.getCurrentPosition(setPos);
-		navigator.geolocation.watchPosition(updatePos);
+		navigator.geolocation.watchPosition(updatePos,errorPos,posOptions);
 		console.log("App Enabled");
 	}
 	else	{
@@ -43,13 +49,14 @@ function startGPS() {
 		return;
     }
 }
+function errorPos(){}
 function updatePos(args)	{
     if(user.lat== args.coords.latitude && user.lon== args.coords.longitude)
         return;
     user.lat=	args.coords.latitude;
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
-    updateMap(user);
+    updateIconPosForUser(user);
 }
 
 function setPos(args)	{

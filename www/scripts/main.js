@@ -2,6 +2,7 @@
 var	user, uuid, roomHash;
 var	database, roomRef;
 var	isMobile;
+var heading=0;
 
 $(document).ready(function(){
 
@@ -22,6 +23,7 @@ $(document).ready(function(){
 			return ("You are leaving the room!");
 		});
 	}
+
 	if(hashTag)	{ //coming in with room hash
 		database=	firebase.database(); 
 		roomHash=	window.location.hash.substring(1);
