@@ -9,11 +9,15 @@ $(document).ready(function(){
 var map;
 var defaultPostion;
 var userMarkers;
-var bounds = new google.maps.LatLngBounds();
+var bounds;
 function startupMap(_user)	{
 	map.setCenter(new google.maps.LatLng(
 		_user.lat, _user.lon
-	));
+	));//Adjust bounding box 
+	for(var i= 0; i< userMarkers.length; i++)	{
+		bounds.extend(userMarkers[i].getPosition());
+	}
+	map.fitBounds(bounds);
 }
 
 function updateMap(_user)	{
@@ -42,13 +46,15 @@ function createMap() {
     //cos default
 	defaultPosition = new google.maps.LatLng(36.3251,-119.3150);
 	userMarkers=	{};
+	bounds=	new google.maps.LatLngBounds();
 	//userMarker = new google.maps.Marker({position: defaultPosition});
 	
 	var mapProp = {
 		center: defaultPosition,
 		zoom:12,
 	};
-		
+	
+	bounds=	new google.maps.LatLngBounds();
 	map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
 	/* TODO: Add the marker dynamically */
