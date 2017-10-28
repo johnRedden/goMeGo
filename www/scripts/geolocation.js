@@ -57,6 +57,7 @@ function updatePos(args)	{
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
     updateIconPosForUser(user);
+
 }
 
 function setPos(args)	{
