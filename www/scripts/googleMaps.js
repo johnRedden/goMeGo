@@ -14,20 +14,32 @@ function startupMap(_user)	{
 	map.setCenter(new google.maps.LatLng(
 		_user.lat, _user.lon
 	));//Adjust bounding box 
-	for(var i= 0; i< userMarkers.length; i++)	{
+	/*for(var i= 0; i< userMarkers.length; i++)	{
 		bounds.extend(userMarkers[i].getPosition());
 	}
-	map.fitBounds(bounds);
+	map.fitBounds(bounds);*/
+}
+
+function changeSettingsColor()	{
+	// Variables
+	var	settings=	$("#settingsContainer h3");
+	var	r=	Math.floor(Math.random()*0xff).toString(16);
+	var	g=	Math.floor(Math.random()*0xff).toString(16);
+	var	b=	Math.floor(Math.random()*0xff).toString(16);
+	
+	if(r.length== 1)	r=	"0"+r;
+	if(g.length== 1)	g=	"0"+g;
+	if(b.length== 1)	b=	"0"+b;
+	
+	settings.css("color", "#"+r+g+b);
 }
 
 function updateMap(_user)	{
-	// Doesn't update a thing, saving on battery costs... right???
-	// Am I misplacing this, because it feels like I am
 	if(!canUpdate)
 		return;
-	
 	if(userMarkers[_user.id])
 		userMarkers[_user.id].setMap(null);
+	
 	
 	userMarkers[_user.id]=	new google.maps.Marker({
 		position:	new google.maps.LatLng(_user.lat, _user.lon),
@@ -46,13 +58,15 @@ function updateMap(_user)	{
 	
 	userMarkers[_user.id].setMap(map);
 	if(user== _user)	{
+		changeSettingsColor();
 		roomRef.child(_user.id).set(_user);
 		// If the update rate at a fixed rate, then set a timeout for the next time the code can access
 		// this portion of the code.
 		if(updateRate!= UpdateRates.immediate)	{
 			canUpdate=	false;
-			setTimeout(function()	{
+			updateTimeout=	setTimeout(function()	{
 				canUpdate=	true;
+				updateMap(user);
 			}, updateRate);
 		}
 	}
@@ -60,8 +74,10 @@ function updateMap(_user)	{
 
 function updateIconPosForUser(_user){
 	//just set the new position for the marker
-	userMarkers[_user.id].setPosition(new google.maps.LatLng(_user.lat, _user.lon));
-
+	if(canUpdate && user== _user)
+		updateMap(_user);
+	else
+		userMarkers[_user.id].setPosition(new google.maps.LatLng(_user.lat, _user.lon));
 }
 
 function deleteFromMap(_user)	{

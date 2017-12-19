@@ -15,12 +15,29 @@ var	UpdateRates=	{
 	}
 };
 var	updateRate=	UpdateRates.immediately;
+var	updateTimeout=	null;
 var	isSettingsOpen=	false;
 
 $(document).ready(function(){
 
 	var URL = window.location.href;
 	var hashTag = window.location.hash;
+	
+	$("#updateRate").change(function(args)	{
+		console.log(args);
+		console.log($("#updateRate").find(":selected").attr("data"));
+		switch(Number($("#updateRate").find(":selected").attr("data")))	{
+			case 0:
+				updateRate=	UpdateRates.immediately;
+				clearTimeout(updateTimeout);
+				canUpdate=	true;
+				break;
+			case 1:	updateRate=	UpdateRates.every15Seconds;	break;
+			case 2:	updateRate=	UpdateRates.every30Seconds;	break;
+			case 3:	updateRate=	UpdateRates.every45Seconds;	break;
+			case 4:	updateRate=	UpdateRates.everyMinute;	break;
+		}
+	});
 	
 	$("#settingsIcon").click(function(args)	{
 		if(isSettingsOpen)

@@ -24,7 +24,15 @@ $(document).ready(function(){
        $("#info").html(heading);
        if(user){
            //set icon rotation in real time with heading
-           userMarkers[user.id].icon.rotation = (heading-90)%360;
+		   // Variables
+		   var	dbgHeadingCorrection=	$("#dbg_heading").val();
+		   
+			if(dbgHeadingCorrection== "")
+				dbgHeadingCorrection=	0;
+			else
+				dbgHeadingCorrection=	Number(dbgHeadingCorrection);
+		   
+           userMarkers[user.id].icon.rotation = (heading-dbgHeadingCorrection)%360;
            userMarkers[user.id].setIcon(userMarkers[user.id].icon);
        }
         
