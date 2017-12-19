@@ -29,7 +29,7 @@
             <h1>GoTrail.me</h1>
 
             <button id="copyButton" class="btn btn-default">Copy Link and Go</button>
-            <p> Real-time hashtag based location sharing.</p>
+            <p>Real-time hashtag based location sharing.</p>
             <input id="copyTarget" class="form-control text-center hidden">
             <input id="userHashTag" class="form-control text-center"  placeholder="#hashTag">
             
@@ -42,9 +42,26 @@
                 
             </p>
         </div>
-        <div id="infoContainer">
-            <div id="info">hi</div>
-        </div>
+		
+		<div id="settingsIcon">
+			<span class="glyphicon glyphicon-cog"></span>
+		</div>
+		
+		<div id="settingsContainer">
+			<span class="glyphicon glyphicon-remove" id="exitSettings"></span>
+			<h3>Settings</h3>
+			<div id="updateRate">
+				<p><b>Change the update rate.</b> The longer the interval the less toll it takes on the battery</p>
+				<select>
+					<option>Immediately Update Device</option>
+					<option>Update every 15 seconds</option>
+					<option>Update every 30 seconds</option>
+					<option>Update every 45 seconds</option>
+					<option>Update every minute</option>
+				</select>
+			</div>
+			<div class="footer"></div>
+		</div>
 
         <div id="mapContainer">
             <div id="googleMap"></div>

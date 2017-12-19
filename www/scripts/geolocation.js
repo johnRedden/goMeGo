@@ -24,7 +24,7 @@ $(document).ready(function(){
        $("#info").html(heading);
        if(user){
            //set icon rotation in real time with heading
-           userMarkers[user.id].icon.rotation = heading;
+           userMarkers[user.id].icon.rotation = (heading-90)%360;
            userMarkers[user.id].setIcon(userMarkers[user.id].icon);
        }
         
@@ -57,7 +57,6 @@ function updatePos(args)	{
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
     updateIconPosForUser(user);
-
 }
 
 function setPos(args)	{

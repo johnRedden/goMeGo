@@ -21,6 +21,11 @@ function startupMap(_user)	{
 }
 
 function updateMap(_user)	{
+	// Doesn't update a thing, saving on battery costs... right???
+	// Am I misplacing this, because it feels like I am
+	if(!canUpdate)
+		return;
+	
 	if(userMarkers[_user.id])
 		userMarkers[_user.id].setMap(null);
 	
@@ -40,9 +45,17 @@ function updateMap(_user)	{
 	});
 	
 	userMarkers[_user.id].setMap(map);
-	if(user== _user)
-    	roomRef.child(_user.id).set(_user);
-	//console.log(userMarkers);
+	if(user== _user)	{
+		roomRef.child(_user.id).set(_user);
+		// If the update rate at a fixed rate, then set a timeout for the next time the code can access
+		// this portion of the code.
+		if(updateRate!= UpdateRates.immediate)	{
+			canUpdate=	false;
+			setTimeout(function()	{
+				canUpdate=	true;
+			}, updateRate);
+		}
+	}
 }
 
 function updateIconPosForUser(_user){

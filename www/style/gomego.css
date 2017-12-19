@@ -1,4 +1,47 @@
 
+#settingsIcon	{
+	position:	absolute;
+	top:	8px;
+	right:	64px;
+	z-index:	20;
+	padding:	5px 16px;
+	background-color:	white;
+}
+#settingsIcon:hover	{
+	background-color:	#d4d4d4;
+	cursor:	pointer;
+}
+
+#exitSettings	{
+	float:	right;
+	position:	relative;
+	right:	0px;
+	padding:	16px;
+	color:	tomato;
+}
+#exitSettings:hover	{
+	color:	white;
+	background-color:	tomato;
+	cursor:	pointer;
+}
+#settingsContainer	{
+	z-index:	30;
+	width:	90%;
+	background-color:	oldlace;
+	position:	relative;
+	margin-top:	5px;
+	display:	none;
+}
+#settingsContainer h3	{
+	text-align:	center;
+	padding-top:	16px;
+}
+#updateRate	{
+	text-align:	center;
+}
+#settingsContainer .footer	{
+	padding-bottom:	16px;
+}
 
 #initContainer{
     width:90%;

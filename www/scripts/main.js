@@ -3,16 +3,41 @@ var	user, uuid, roomHash;
 var	database, roomRef;
 var	isMobile;
 var heading=0;
+var	canUpdate=	true;
+var	UpdateRates=	{
+	immediately:	0,
+	every15Seconds:	15000,
+	every30Seconds:	30000,
+	every45Seconds:	45000,
+	everyMinute:	60000,
+	everyXSeconds:	function(x)	{
+		return 1000*x;
+	}
+};
+var	updateRate=	UpdateRates.immediately;
+var	isSettingsOpen=	false;
 
 $(document).ready(function(){
 
 	var URL = window.location.href;
 	var hashTag = window.location.hash;
 	
+	$("#settingsIcon").click(function(args)	{
+		if(isSettingsOpen)
+			$("#settingsContainer").css("display", "none");
+		else
+			$("#settingsContainer").css("display", "block");
+		isSettingsOpen=	!isSettingsOpen;
+	});
+	
+	$("#exitSettings").click(function(args)	{
+		isSettingsOpen=	false;
+		$("#settingsContainer").css("display", "none");
+	});
+	
 	isMobile=	(/(android|ipad|iphone|ipod)/i).test(navigator.userAgent);
 	
 	if(isMobile)	{
-		alert("You are Mobile!");
 		window.addEventListener("beforeunload", function()	{
 			roomRef.child(uuid).remove();
 		});
