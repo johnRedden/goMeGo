@@ -24,6 +24,9 @@
 	background-color:	tomato;
 	cursor:	pointer;
 }
+#dbg_heading	{
+	display:	none;
+}
 #settingsContainer	{
 	z-index:	30;
 	width:	90%;

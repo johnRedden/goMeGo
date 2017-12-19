@@ -59,8 +59,13 @@ function startGPS() {
 }
 function errorPos(){}
 function updatePos(args)	{
-    if(user.lat== args.coords.latitude && user.lon== args.coords.longitude)
+    if(
+		Math.floor(100005*user.lat)== Math.floor(100005*args.coords.latitude) &&
+		Math.floor(100005*user.lon)== Math.floor(100005*args.coords.longitude)
+	)	{
         return;
+	}
+	
     user.lat=	args.coords.latitude;
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;

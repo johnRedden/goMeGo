@@ -58,11 +58,12 @@ function updateMap(_user)	{
 	
 	userMarkers[_user.id].setMap(map);
 	if(user== _user)	{
+		// This is to see if the database is being uploaded to
 		changeSettingsColor();
 		roomRef.child(_user.id).set(_user);
 		// If the update rate at a fixed rate, then set a timeout for the next time the code can access
 		// this portion of the code.
-		if(updateRate!= UpdateRates.immediate)	{
+		if(updateRate> 0)	{
 			canUpdate=	false;
 			updateTimeout=	setTimeout(function()	{
 				canUpdate=	true;
