@@ -84,7 +84,21 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOjx5aDzIZtAnPP_rurFRRhS6_SRaONvg&callback=createMap"></script>
     
     <!-- TODO: Add AdSense here. However we need an official account for it, so we can distribute evenly? -->
-	
+    
+    <!-- Firebase App is always required and must be first -->
+    <script src="/__/firebase/5.3.0/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <!-- Comment out (or don't include) services that you don't want to use -->
+    <!--<script src="/__/firebase/5.3.0/firebase-auth.js"></script>-->
+    <script src="/__/firebase/5.3.0/firebase-database.js"></script>
+    <!--<script src="/__/firebase/5.3.0/firebase-messaging.js"></script>-->
+    <!--<script src="/__/firebase/5.3.0/firebase-functions.js"></script>-->
+    <!-- <script src="/__/firebase/5.3.0/firebase-storage.js"></script> -->
+
+    <script src="/__/firebase/init.js"></script>
+
+<!--  old way to initialize firebase
     <script src="https://www.gstatic.com/firebasejs/4.3.0/firebase.js"></script>
     <script>
         // Initialize Firebase
@@ -97,9 +111,7 @@
             messagingSenderId: "748348320977"
         };
         firebase.initializeApp(config);
-
-
     </script>
-
+-->
 </body>
 </html>
