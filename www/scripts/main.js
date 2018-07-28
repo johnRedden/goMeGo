@@ -24,8 +24,6 @@ $(document).ready(function(){
 	var hashTag = window.location.hash;
 	
 	$("#updateRate").change(function(args)	{
-		console.log(args);
-		console.log($("#updateRate").find(":selected").attr("data"));
 		switch(Number($("#updateRate").find(":selected").attr("data")))	{
 			case 0:
 				updateRate=	UpdateRates.immediately;
@@ -36,6 +34,20 @@ $(document).ready(function(){
 			case 2:	updateRate=	UpdateRates.every30Seconds;	break;
 			case 3:	updateRate=	UpdateRates.every45Seconds;	break;
 			case 4:	updateRate=	UpdateRates.everyMinute;	break;
+		}
+	});
+	
+	$("#shareButton").click(function(args)	{
+		// Shares the room
+		// If the user is on android and is using chrome, use the special menu
+		if(navigator.share)	{
+			console.log("share!");
+			navigator.share({
+				title:	document.title,
+				text:	"Hello World",
+				url:	window.location.href
+			}).then(function()	{	console.log("Successful share")	})
+			.catch(function(error)	{	console.log("Error sharing:", error)	});
 		}
 	});
 	
