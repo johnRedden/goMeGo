@@ -4,7 +4,8 @@ $(document).ready(function(){
 
     //HTML5 Geolocation ( https://www.w3schools.com/html/html5_geolocation.asp )
     //position.coords.heading does not seem to work... try this
-
+    
+/* Heading Stuff not working correctly... will delete
     //heading watching here currently not being used
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', deviceOrientationHandler, true)
@@ -37,8 +38,9 @@ $(document).ready(function(){
        }
         
     }
-
+*/
 });
+
 
 /* Position Watching Options here *************************   */
 posOptions = {

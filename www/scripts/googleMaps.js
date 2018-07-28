@@ -46,11 +46,15 @@ function updateMap(_user)	{
 		icon: {
 			//local user gets arrow and blue
 			//helpful icon reference: https://developers.google.com/maps/documentation/javascript/3.exp/reference#Icon
-			path: user.id===_user.id?google.maps.SymbolPath.FORWARD_CLOSED_ARROW:google.maps.SymbolPath.CIRCLE,
+			//path: user.id===_user.id?google.maps.SymbolPath.FORWARD_CLOSED_ARROW:google.maps.SymbolPath.CIRCLE,
+			path: google.maps.SymbolPath.CIRCLE,
 			scale: 6,
 			rotation: heading,
-			strokeColor: user.id===_user.id?'blue':'red',
-			strokeWeight: 4
+			strokeColor: 'red', //everybody should have a different color?
+			strokeWeight: 3,
+			fillColor: 'gold',
+			fillOpacity: user.id===_user.id?0.8:0,  //this user gets gold fill
+		
 		}
 		
 		//user.id===_user.id?'images/pacman.png#pacman':'', //local user gets pacman otherwise default	

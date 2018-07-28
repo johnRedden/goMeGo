@@ -22,6 +22,7 @@ $(document).ready(function(){
 
 	var URL = window.location.href;
 	var hashTag = window.location.hash;
+	database = firebase.database();
 	
 	$("#updateRate").change(function(args)	{
 		switch(Number($("#updateRate").find(":selected").attr("data")))	{
@@ -82,10 +83,11 @@ $(document).ready(function(){
 	}
 
 	if(hashTag)	{ //coming in with room hash
-		database=	firebase.database(); 
+		
 		roomHash=	window.location.hash.substring(1);
 		$("#initContainer").hide();
-		startGPS();
+		startGPS();  //in geolocation.js
+		
 	}else{ //coming in without room hash
 		//show auto generated link
 		roomHash=	gurid();
@@ -96,8 +98,6 @@ $(document).ready(function(){
 		//listen for copy click
 		$("#copyButton").click(function(){
 
-			database=	firebase.database(); 
-
 			try{
 				location.hash=	$("#userHashTag").val();
 				roomHash=	window.location.hash.substring(1);
@@ -107,7 +107,7 @@ $(document).ready(function(){
 				document.execCommand('copy', true);
 				
 				$("#initContainer").hide();
-				startGPS();
+				startGPS();  //in geolocation.js
 			}catch(e){
 				alert(e);
 			}
