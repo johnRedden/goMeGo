@@ -48,6 +48,12 @@ posOptions = {
 };
 function startGPS() {
 	if(navigator.geolocation)	{
+        uuid=	localStorage.getItem("uuid") || (function()	{
+            // Variables
+            var	_uuid=	guuid();
+            localStorage.setItem("uuid", _uuid);
+            return _uuid;
+        })();
 		navigator.geolocation.getCurrentPosition(setPos);
 		navigator.geolocation.watchPosition(updatePos,errorPos,posOptions);
 		console.log("App Enabled");
@@ -73,7 +79,6 @@ function updatePos(args)	{
 }
 
 function setPos(args)	{
-
     uuid=	localStorage.getItem("uuid") || (function()	{
         // Variables
         var	_uuid=	guuid();

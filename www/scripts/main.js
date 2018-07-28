@@ -43,11 +43,14 @@ $(document).ready(function(){
 		if(navigator.share)	{
 			console.log("share!");
 			navigator.share({
-				title:	document.title,
-				text:	"Hello World",
+				title:	"GoMeGo Room",
+				text:	"Join Me in this GoMeGo Room:\n",
 				url:	window.location.href
-			}).then(function()	{	console.log("Successful share")	})
-			.catch(function(error)	{	console.log("Error sharing:", error)	});
+			});
+		}
+		// If the user doesn't have the special menu ready, then save it to clipboard
+		else	{
+			
 		}
 	});
 	
@@ -67,7 +70,7 @@ $(document).ready(function(){
 	isMobile=	(/(android|ipad|iphone|ipod)/i).test(navigator.userAgent);
 	
 	if(isMobile)	{
-		window.addEventListener("beforeunload", function()	{
+		window.addEventListener("unload", function()	{
 			roomRef.child(uuid).remove();
 		});
 	}
