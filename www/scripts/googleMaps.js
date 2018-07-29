@@ -10,10 +10,12 @@ var map;
 var defaultPostion;
 var userMarkers;
 var bounds;
-function startupMap(_user)	{
+
+function startupMap(_user){ //occurs once
 	map.setCenter(new google.maps.LatLng(
 		_user.lat, _user.lon
-	));//Adjust bounding box 
+	));
+	//Adjust bounding box to fit all markers somewhere
 	/*for(var i= 0; i< userMarkers.length; i++)	{
 		bounds.extend(userMarkers[i].getPosition());
 	}
@@ -35,11 +37,17 @@ function changeSettingsColor()	{
 }
 
 function updateMap(_user)	{
+
+	//TODO: trace canUpdate?? OnChildAdded... we need to update no matter what! right??
+	//Paul Please explain your thinking here?
+	/*
 	if(!canUpdate)
 		return;
+	*/
+
+	//userMarkers is a global array initialized in createMap()
 	if(userMarkers[_user.id])
-		userMarkers[_user.id].setMap(null);
-	
+		userMarkers[_user.id].setMap(null);  //erases the old marker I think?
 	
 	userMarkers[_user.id]=	new google.maps.Marker({
 		position:	new google.maps.LatLng(_user.lat, _user.lon),
@@ -60,8 +68,14 @@ function updateMap(_user)	{
 		//user.id===_user.id?'images/pacman.png#pacman':'', //local user gets pacman otherwise default	
 	});
 	
-	userMarkers[_user.id].setMap(map);
-	if(user== _user)	{
+	userMarkers[_user.id].setMap(map);  //sets the new marker
+
+	//This method updates the map... should not hit the database at all??
+
+
+	//Paul Please explain your reasoning??
+/*	
+	if(user== _user){
 		// This is to see if the database is being uploaded to
 		changeSettingsColor();
 		roomRef.child(_user.id).set(_user);
@@ -75,11 +89,15 @@ function updateMap(_user)	{
 			}, updateRate);
 		}
 	}
+	*/
+
+
 }
 
 function updateIconPosForUser(_user){
 	//just set the new position for the marker
-	if(canUpdate && user== _user)
+	//not sure canUpdate should be here    if(canUpdate && user== _user)
+	if(user== _user)
 		updateMap(_user);
 	else
 		userMarkers[_user.id].setPosition(new google.maps.LatLng(_user.lat, _user.lon));
@@ -93,7 +111,7 @@ function deleteFromMap(_user)	{
 	delete userMarkers[_user.id];
 }
 
-function createMap() {
+function createMap() { // called from index.html once (init map here)
     //cos default
 	defaultPosition = new google.maps.LatLng(36.3251,-119.3150);
 	userMarkers=	{};

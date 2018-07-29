@@ -42,53 +42,58 @@ $(document).ready(function(){
 });
 
 
-/* Position Watching Options here *************************   */
+/* Position Watching Options here (choices to be made here) *************************   
+https://developer.mozilla.org/en-US/docs/Web/API/PositionOptions
+*/
 posOptions = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 500  //update every half second **I think**
+  enableHighAccuracy: false, //less battery usage (default false)
+  timeout: 5000,  //must return within 5 seconds (defalault 'Infinity' won't return until location avail)
+  maximumAge: 0  //0 means do not use cached position
 };
-function startGPS() {
-	if(navigator.geolocation)	{
+function startGPS() { //coming in from main.js only once with roomHash (room name) set
+    if(navigator.geolocation)	{ //Q: generates user prompt for location here?
+        
         uuid=	localStorage.getItem("uuid") || (function()	{
-            // Variables
             var	_uuid=	guuid();
             localStorage.setItem("uuid", _uuid);
             return _uuid;
-        })();
-		navigator.geolocation.getCurrentPosition(setPos);
-		navigator.geolocation.watchPosition(updatePos,errorPos,posOptions);
-		console.log("App Enabled");
+        })();  //Global unique user id (uuid) now set and in local storage
+
+		navigator.geolocation.getCurrentPosition(setPos); //uses default options
+        navigator.geolocation.watchPosition(updatePos,errorPos,posOptions);
+        
+        console.log("App Enabled - uuid set");
+        
 	}
 	else	{
 		alert("App Disabled. Please activate your location to use.");
 		return;
     }
 }
-function errorPos(){}
+function errorPos(err){ console.log(err) }
 function updatePos(args)	{
+    //TODO: trace this calculation... if no location change do not update database
+    /*
     if(
 		Math.floor(100005*user.lat)== Math.floor(100005*args.coords.latitude) &&
 		Math.floor(100005*user.lon)== Math.floor(100005*args.coords.longitude)
 	)	{
         return;
-	}
+    }
+    */
 	
     user.lat=	args.coords.latitude;
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
+    //update the database here
+    roomRef.child(user.id).set(user); //should not set here... ??
+    //update the current map
     updateIconPosForUser(user);
 }
 
-function setPos(args)	{
-    uuid=	localStorage.getItem("uuid") || (function()	{
-        // Variables
-        var	_uuid=	guuid();
-        localStorage.setItem("uuid", _uuid);
-        return _uuid;
-    })();
+function setPos(args){  // occurs once uuid set
 
-    user=	{
+    user=	{  //user global populated for first time here
         id:	uuid,
         lat:	args.coords.latitude,
         lon:	args.coords.longitude,
@@ -99,11 +104,11 @@ function setPos(args)	{
  
     // DATABASE Listeners these callbacks are in dbCalls.js
     roomRef=	database.ref("rooms/"+roomHash+"/users");
-    roomRef.on("child_added", onChildAdded);
+    roomRef.on("child_added", onChildAdded);  //generates an update map call
     roomRef.on("child_changed", onChildChanged);
     roomRef.on("child_removed", onChildRemoved);
     
-    roomRef.child(uuid).set(user);
+    roomRef.child(uuid).set(user);  //occurs once but fires child added event in dbCalls.js
 }
 
 // Generate unique user id

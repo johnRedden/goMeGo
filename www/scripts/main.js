@@ -24,6 +24,8 @@ $(document).ready(function(){
 	var hashTag = window.location.hash;
 	database = firebase.database();
 	
+
+	//Event Listeners ******************************************
 	$("#updateRate").change(function(args)	{
 		switch(Number($("#updateRate").find(":selected").attr("data")))	{
 			case 0:
@@ -67,7 +69,21 @@ $(document).ready(function(){
 		isSettingsOpen=	false;
 		$("#settingsContainer").css("display", "none");
 	});
+
+			// build URL
+			$("#userHashTag").keyup(function(){
+
+				roomHash = $(this).val().substring(1);
+				//window.location.hash=	roomHash;
 	
+				$("#copyTarget").val(location.href);
+	
+			});
+	//****************************** 
+	
+
+	// End Game - Users leave remove from real time database
+	// Assuming roomRef is a global database reference defined somewhere
 	isMobile=	(/(android|ipad|iphone|ipod)/i).test(navigator.userAgent);
 	
 	if(isMobile)	{
@@ -81,7 +97,9 @@ $(document).ready(function(){
 			return ("You are leaving the room!");
 		});
 	}
+	// ************************************
 
+	// App Start here ************************************
 	if(hashTag)	{ //coming in with room hash
 		
 		roomHash=	window.location.hash.substring(1);
@@ -89,40 +107,36 @@ $(document).ready(function(){
 		startGPS();  //in geolocation.js
 		
 	}else{ //coming in without room hash
-		//show auto generated link
-		roomHash=	gurid();
-		//location.hash=	roomHash;
+		
+		roomHash=	gurid(); //auto generated room name
+		
+		// saved in DOM which may be changed by user
 		$("#copyTarget").val(window.location.href);
 		$("#userHashTag").val("#"+roomHash);
 
-		//listen for copy click
+		//listen for copy and Go button click
 		$("#copyButton").click(function(){
 
 			try{
 				location.hash=	$("#userHashTag").val();
-				roomHash=	window.location.hash.substring(1);
+				roomHash=	window.location.hash.substring(1);  //room name
 				
+				//copy room link to clipboard after setting it into hidden copyTarget element
 				$("#copyTarget").val(window.location.href);
 				$("#copyTarget").select();
 				document.execCommand('copy', true);
 				
 				$("#initContainer").hide();
-				startGPS();  //in geolocation.js
+
+				startGPS();  //Start new room GPS in geolocation.js
+
 			}catch(e){
 				alert(e);
 			}
 
 		});
 
-		// build URL
-		$("#userHashTag").keyup(function(){
-
-			roomHash = $(this).val().substring(1);
-			//window.location.hash=	roomHash;
-
-			$("#copyTarget").val(location.href);
-
-		});
+		// *******************************************
 
 	}
 
