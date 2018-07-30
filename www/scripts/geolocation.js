@@ -1,7 +1,7 @@
 //geolocation
 
 $(document).ready(function(){
-
+    
     //HTML5 Geolocation ( https://www.w3schools.com/html/html5_geolocation.asp )
     //position.coords.heading does not seem to work... try this
     
@@ -85,18 +85,10 @@ function updatePos(args)	{
     user.lat=	args.coords.latitude;
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
+
     //update the database here
-    roomRef.child(user.id).set(user,function(error) {
-        if (error) {
-          // The write failed...
-          console.log(error)
-        } else {
-          // Data saved successfully!
-          console.log('database save successful')
-        }
-      }); //should not set here... ??
-    //update the current map
-    updateIconPosForUser(user);
+    saveUserToDatabase();
+
 }
 
 function setPos(args){  // occurs once uuid set
@@ -116,18 +108,29 @@ function setPos(args){  // occurs once uuid set
     roomRef.on("child_changed", onChildChanged);
     roomRef.on("child_removed", onChildRemoved);
     
-    
     //same as updatePos
+    saveUserToDatabase();
+      
+}
+
+//hit the database
+function saveUserToDatabase(){
+    //using global user object
+    $("#settingsIcon").css("background-color","LightYellow");
+    $("#statusMsg").html("updating");
     roomRef.child(user.id).set(user,function(error) {
         if (error) {
           // The write failed...
           console.log(error)
         } else {
-          // Data saved successfully!
-          console.log('golden ready to go')
+            // Data saved successfully!
+            console.log('database save successful');
+            $("#settingsIcon").css("background-color","LightGreen");
+            $("#statusMsg").html("GoMeGo.io");
+            //update the current map
+            updateIconPosForUser(user);
         }
-      });  //occurs once but fires child added event in dbCalls.js
-      
+      }); 
 }
 
 // Generate unique user id
