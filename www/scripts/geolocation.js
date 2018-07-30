@@ -73,20 +73,28 @@ function startGPS() { //coming in from main.js only once with roomHash (room nam
 function errorPos(err){ console.log(err) }
 function updatePos(args)	{
     //TODO: trace this calculation... if no location change do not update database
-    /*
+    
     if(
 		Math.floor(100005*user.lat)== Math.floor(100005*args.coords.latitude) &&
 		Math.floor(100005*user.lon)== Math.floor(100005*args.coords.longitude)
 	)	{
         return;
     }
-    */
+    
 	
     user.lat=	args.coords.latitude;
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
     //update the database here
-    roomRef.child(user.id).set(user); //should not set here... ??
+    roomRef.child(user.id).set(user,function(error) {
+        if (error) {
+          // The write failed...
+          console.log(error)
+        } else {
+          // Data saved successfully!
+          console.log('database save successful')
+        }
+      }); //should not set here... ??
     //update the current map
     updateIconPosForUser(user);
 }
@@ -108,7 +116,18 @@ function setPos(args){  // occurs once uuid set
     roomRef.on("child_changed", onChildChanged);
     roomRef.on("child_removed", onChildRemoved);
     
-    roomRef.child(uuid).set(user);  //occurs once but fires child added event in dbCalls.js
+    
+    //same as updatePos
+    roomRef.child(user.id).set(user,function(error) {
+        if (error) {
+          // The write failed...
+          console.log(error)
+        } else {
+          // Data saved successfully!
+          console.log('golden ready to go')
+        }
+      });  //occurs once but fires child added event in dbCalls.js
+      
 }
 
 // Generate unique user id
