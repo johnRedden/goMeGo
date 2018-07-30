@@ -130,7 +130,9 @@ function saveUserToDatabase(){
             $("#statusMsg").html("GoMeGo.io");
             $("#settingsIcon").removeClass("fa-spin");
             //update the current map
-            updateIconPosForUser(user);
+            //child_changed will be fired at this point and the map will change
+            // so no need for the below call!!
+            //updateIconPosForUser(user);
         }
       }); 
 }
