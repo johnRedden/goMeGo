@@ -116,8 +116,9 @@ function setPos(args){  // occurs once uuid set
 //hit the database
 function saveUserToDatabase(){
     //using global user object
-    $("#settingsIcon").css("background-color","LightYellow");
+    $("#settings").css("background-color","LightYellow");
     $("#statusMsg").html("updating");
+    $("#settingsIcon").addClass("fa-spin");
     roomRef.child(user.id).set(user,function(error) {
         if (error) {
           // The write failed...
@@ -125,8 +126,9 @@ function saveUserToDatabase(){
         } else {
             // Data saved successfully!
             console.log('database save successful');
-            $("#settingsIcon").css("background-color","LightGreen");
+            $("#settings").css("background-color","LightGreen");
             $("#statusMsg").html("GoMeGo.io");
+            $("#settingsIcon").removeClass("fa-spin");
             //update the current map
             updateIconPosForUser(user);
         }

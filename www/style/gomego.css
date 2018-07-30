@@ -1,5 +1,5 @@
 
-#settingsIcon	{
+#settings	{
 	position:	absolute;
 	top:	8px;
 	right:	64px;
@@ -7,7 +7,7 @@
 	padding:	5px 16px;
 	background-color:	white;
 }
-#settingsIcon:hover	{
+#settings:hover	{
 	background-color:	#d4d4d4;
 	cursor:	pointer;
 }

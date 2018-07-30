@@ -57,7 +57,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#settingsIcon").click(function(args)	{
+	$("#settings").click(function(args)	{
 		if(isSettingsOpen)
 			$("#settingsContainer").css("display", "none");
 		else
