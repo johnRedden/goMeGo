@@ -3,7 +3,7 @@ function onChildAdded(snapshot, prevChildKey)	{
 	//updateMap(user);
 	updateMap(snapshot.toJSON());
 
-	//Adjust bounding box 
+	//Adjust bounding box somewhere
 
 }
 

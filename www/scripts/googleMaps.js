@@ -37,13 +37,7 @@ function changeSettingsColor()	{
 }
 
 function updateMap(_user)	{
-
-	//TODO: trace canUpdate?? OnChildAdded... we need to update no matter what! right??
-	//Paul Please explain your thinking here?
-	/*
-	if(!canUpdate)
-		return;
-	*/
+	// _user is coming in from the database (we have user global here too and may be different)
 
 	//userMarkers is a global array initialized in createMap()
 	if(userMarkers[_user.id])
@@ -64,43 +58,25 @@ function updateMap(_user)	{
 			fillOpacity: user.id===_user.id?0.8:0,  //this user gets gold fill
 		
 		}
-		
+		//fun maybe?
 		//user.id===_user.id?'images/pacman.png#pacman':'', //local user gets pacman otherwise default	
 	});
 	
 	userMarkers[_user.id].setMap(map);  //sets the new marker
 
-	//This method updates the map... should not hit the database at all??
-
-
-	//Paul Please explain your reasoning??
-/*	
-	if(user== _user){
-		// This is to see if the database is being uploaded to
-		changeSettingsColor();
-		roomRef.child(_user.id).set(_user);
-		// If the update rate at a fixed rate, then set a timeout for the next time the code can access
-		// this portion of the code.
-		if(updateRate> 0)	{
-			canUpdate=	false;
-			updateTimeout=	setTimeout(function()	{
-				canUpdate=	true;
-				updateMap(user);
-			}, updateRate);
-		}
-	}
-	*/
-
+	//This method updates the map... should not hit the database at all.
 
 }
 
 function updateIconPosForUser(_user){
-	//just set the new position for the marker
-	//not sure canUpdate should be here    if(canUpdate && user== _user)
+	//just set the new position for the existing marker
+	userMarkers[_user.id].setPosition(new google.maps.LatLng(_user.lat, _user.lon));
+
+	/* not sure why this is below 
 	if(user== _user)
 		updateMap(_user);
 	else
-		userMarkers[_user.id].setPosition(new google.maps.LatLng(_user.lat, _user.lon));
+		*/
 }
 
 function deleteFromMap(_user)	{

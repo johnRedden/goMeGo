@@ -73,20 +73,18 @@ function startGPS() { //coming in from main.js only once with roomHash (room nam
 function errorPos(err){ console.log(err) }
 function updatePos(args)	{
     //TODO: trace this calculation... if no location change do not update database
-    
     if(
 		Math.floor(100005*user.lat)== Math.floor(100005*args.coords.latitude) &&
 		Math.floor(100005*user.lon)== Math.floor(100005*args.coords.longitude)
 	)	{
         return;
     }
-    
-	
+
     user.lat=	args.coords.latitude;
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
 
-    //update the database here
+    //next call should fire child_changed event
     saveUserToDatabase();
 
 }
@@ -108,17 +106,19 @@ function setPos(args){  // occurs once uuid set
     roomRef.on("child_changed", onChildChanged);
     roomRef.on("child_removed", onChildRemoved);
     
-    //same as updatePos
+    //Next call should fire child_added event
     saveUserToDatabase();
       
 }
 
 //hit the database
 function saveUserToDatabase(){
-    //using global user object
+    
     $("#settings").css("background-color","LightYellow");
     $("#statusMsg").html("updating");
     $("#settingsIcon").addClass("fa-spin");
+
+    //using global user object (will fire child_added or child_changed event)
     roomRef.child(user.id).set(user,function(error) {
         if (error) {
           // The write failed...
@@ -129,10 +129,7 @@ function saveUserToDatabase(){
             $("#settings").css("background-color","LightGreen");
             $("#statusMsg").html("GoMeGo.io");
             $("#settingsIcon").removeClass("fa-spin");
-            //update the current map
-            //child_changed will be fired at this point and the map will change
-            // so no need for the below call!!
-            //updateIconPosForUser(user);
+            //
         }
       }); 
 }
