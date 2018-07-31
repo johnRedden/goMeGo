@@ -23,6 +23,7 @@ $(document).ready(function(){
 	var URL = window.location.href;
 	var hashTag = window.location.hash;
 	database = firebase.database();
+	$("#settings").hide();
 	
 
 	//Event Listeners ******************************************
@@ -127,7 +128,7 @@ $(document).ready(function(){
 				document.execCommand('copy', true);
 				
 				$("#initContainer").hide();
-
+				$("#settings").show();
 				startGPS();  //Start new room GPS in geolocation.js
 
 			}catch(e){

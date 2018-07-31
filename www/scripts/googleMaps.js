@@ -15,31 +15,14 @@ function startupMap(_user){ //occurs once
 	map.setCenter(new google.maps.LatLng(
 		_user.lat, _user.lon
 	));
-	//Adjust bounding box to fit all markers somewhere
-	/*for(var i= 0; i< userMarkers.length; i++)	{
-		bounds.extend(userMarkers[i].getPosition());
-	}
-	map.fitBounds(bounds);*/
-}
-
-function changeSettingsColor()	{
-	// Variables
-	var	settings=	$("#settingsContainer h3");
-	var	r=	Math.floor(Math.random()*0xff).toString(16);
-	var	g=	Math.floor(Math.random()*0xff).toString(16);
-	var	b=	Math.floor(Math.random()*0xff).toString(16);
-	
-	if(r.length== 1)	r=	"0"+r;
-	if(g.length== 1)	g=	"0"+g;
-	if(b.length== 1)	b=	"0"+b;
-	
-	settings.css("color", "#"+r+g+b);
 }
 
 function updateMap(_user)	{
 	// _user is coming in from the database (we have user global here too and may be different)
-
-	//userMarkers is a global array initialized in createMap()
+	// this occurs on child added
+	//This method updates the map... should not hit the database at all.
+	
+	//userMarkers is a global initialized in createMap()
 	if(userMarkers[_user.id])
 		userMarkers[_user.id].setMap(null);  //erases the old marker I think?
 	
@@ -64,19 +47,22 @@ function updateMap(_user)	{
 	
 	userMarkers[_user.id].setMap(map);  //sets the new marker
 
-	//This method updates the map... should not hit the database at all.
+	//Set bounds (global) with regard to this new marker (only once per new marker)
+	bounds.extend(userMarkers[_user.id].getPosition());
+	//TODO: test centering conditions and see what works best
+	//map.setCenter(bounds.getCenter());
+	map.fitBounds(bounds);
+	if(user.id===_user.id){
+		console.log('yes')
+		map.setZoom(15);
+
+	}
 
 }
 
 function updateIconPosForUser(_user){
 	//just set the new position for the existing marker
 	userMarkers[_user.id].setPosition(new google.maps.LatLng(_user.lat, _user.lon));
-
-	/* not sure why this is below 
-	if(user== _user)
-		updateMap(_user);
-	else
-		*/
 }
 
 function deleteFromMap(_user)	{
@@ -90,19 +76,16 @@ function deleteFromMap(_user)	{
 function createMap() { // called from index.html once (init map here)
     //cos default
 	defaultPosition = new google.maps.LatLng(36.3251,-119.3150);
+	bounds = new google.maps.LatLngBounds(); //Global used later
 	userMarkers=	{};
-	bounds=	new google.maps.LatLngBounds();
-	//userMarker = new google.maps.Marker({position: defaultPosition});
-	
+
 	var mapProp = {
 		center: defaultPosition,
 		zoom:12,
 	};
 	
-	bounds=	new google.maps.LatLngBounds();
 	map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+	
 
-	/* TODO: Add the marker dynamically */
-	//userMarker.setMap(map);
 }
 
