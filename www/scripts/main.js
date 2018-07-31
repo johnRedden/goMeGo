@@ -105,6 +105,7 @@ $(document).ready(function(){
 		
 		roomHash=	window.location.hash.substring(1);
 		$("#initContainer").hide();
+		$("#settings").show();
 		startGPS();  //in geolocation.js
 		
 	}else{ //coming in without room hash
