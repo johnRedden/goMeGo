@@ -19,6 +19,15 @@ var	updateTimeout=	null;
 var	isSettingsOpen=	false;
 
 $(document).ready(function(){
+	
+	//navigator.onLine gives a boolean of whether or not the device has an internet connection
+	
+	window.addEventListener("online", function(){
+		$("#internetConnection").css("background-color", "lightgreen");
+	});
+	window.addEventListener("offline", function(){
+		$("#internetConnection").css("background-color", "tomato");
+	});
 
 	var URL = window.location.href;
 	var hashTag = window.location.hash;
@@ -71,15 +80,21 @@ $(document).ready(function(){
 		$("#settingsContainer").css("display", "none");
 	});
 
-			// build URL
-			$("#userHashTag").keyup(function(){
+	// build URL
+	$("#userHashTag").keyup(function(args){
+		if(args.keyCode== 13)	{
+			location.hash=	$("#userHashTag").val();
+			$("#initContainer").hide();
+			$("#settings").show();
+			startGPS();  //in geolocation.js
+		}
+		
+		roomHash = $(this).val().substring(1);
+		//window.location.hash=	roomHash;
 
-				roomHash = $(this).val().substring(1);
-				//window.location.hash=	roomHash;
-	
-				$("#copyTarget").val(location.href);
-	
-			});
+		$("#copyTarget").val(location.href);
+		console.log(roomHash);
+	});
 	//****************************** 
 	
 
