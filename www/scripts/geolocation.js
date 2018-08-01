@@ -53,6 +53,12 @@ posOptions = {
 function startGPS() { //coming in from main.js only once with roomHash (room name) set
     if(navigator.geolocation)	{ //Q: generates user prompt for location here?
         
+        // This should generate a random color but with darkish tones to contrast the white, green, blue, and tan colors of the google map
+        /*userColor=  localStorage.getItem("color") || (function()    {
+            var _userColor= gucolor();
+            localStorage.setItem("color", _userColor);
+            return _userColor;
+        })();*/
         uuid=	localStorage.getItem("uuid") || (function()	{
             var	_uuid=	guuid();
             localStorage.setItem("uuid", _uuid);
@@ -83,6 +89,7 @@ function updatePos(args)	{
     user.lat=	args.coords.latitude;
     user.lon=	args.coords.longitude;
     user.timestamp=	args.timestamp;
+    //user.color= userColor;
 
     //next call should fire child_changed event
     saveUserToDatabase();
@@ -93,6 +100,7 @@ function setPos(args){  // occurs once uuid set
 
     user=	{  //user global populated for first time here
         id:	uuid,
+        //color:  userColor,
         lat:	args.coords.latitude,
         lon:	args.coords.longitude,
         timestamp:	args.timestamp
@@ -115,19 +123,22 @@ function setPos(args){  // occurs once uuid set
 function saveUserToDatabase(){
     
     $("#settings").css("background-color","LightYellow");
-    $("#statusMsg").html("updating");
+    $("#statusMsg").html("Updating");
     $("#settingsIcon").addClass("fa-spin");
 
     //using global user object (will fire child_added or child_changed event)
     roomRef.child(user.id).set(user,function(error) {
         if (error) {
           // The write failed...
-          console.log(error)
+          console.log(error);
+          $("#settings").css("background-color", "tomato");
+          $("#statusMsg").html("Uh-oh!");
+          $("#settingsIcon").removeClass("fa-spin");
         } else {
             // Data saved successfully!
             console.log('database save successful');
             $("#settings").css("background-color","LightGreen");
-            $("#statusMsg").html("GoMeGo.io");
+            $("#statusMsg").html("Settings");
             $("#settingsIcon").removeClass("fa-spin");
             //
         }

@@ -1,5 +1,5 @@
 //GoMeGo Start Globals
-var	user, uuid, roomHash;
+var	user, uuid, roomHash, userColor;
 var	database, roomRef;
 var	isMobile;
 var heading=0;
@@ -54,7 +54,6 @@ $(document).ready(function(){
 		// Shares the room
 		// If the user is on android and is using chrome, use the special menu
 		if(navigator.share)	{
-			console.log("share!");
 			navigator.share({
 				title:	"GoMeGo Room",
 				text:	"Join Me in this GoMeGo Room:\n",
@@ -165,4 +164,9 @@ function gurid()	{
         return Math.floor((1 + Math.random()) * 0x100000).toString(36);
     }
     return s4() + s4();
+}
+
+// Generate unique color
+function gucolor()	{
+	return (Math.floor(Math.random() * 0x1000000).toString(16));
 }

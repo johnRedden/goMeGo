@@ -35,7 +35,7 @@ function updateMap(_user)	{
 			path: google.maps.SymbolPath.CIRCLE,
 			scale: 6,
 			rotation: heading,
-			strokeColor: 'red', //everybody should have a different color?
+			strokeColor: 'red',//"#"+_user.color, //everybody should have a different color?
 			strokeWeight: 3,
 			fillColor: 'gold',
 			fillOpacity: user.id===_user.id?0.8:0,  //this user gets gold fill
