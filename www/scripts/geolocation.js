@@ -82,7 +82,8 @@ function updatePos(args)	{
 
     // null on pc ... so need to test on phone.
     console.log(args.coords.heading)
-    $("#testHeading").html(args.coords.heading);
+    if(args.coords.heading!==null)
+        $("#testHeading").html(args.coords.heading);
 
     //TODO: trace this calculation... if no location change do not update database
     if(

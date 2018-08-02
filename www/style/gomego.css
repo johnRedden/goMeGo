@@ -30,6 +30,14 @@ body	{
 	text-align:	center;
 	background-color:	lightgreen;
 }
+#testHeading	{
+	position:	absolute;
+	top:	8px;
+	left: 50px;
+	z-index:	20;
+	padding:	5px 16px;
+	background-color:	lightgreen;
+}
 
 #exitSettings	{
 	float:	right;
