@@ -32,7 +32,7 @@ function updateMap(_user)	{
 			//local user gets arrow and blue
 			//helpful icon reference: https://developers.google.com/maps/documentation/javascript/3.exp/reference#Icon
 			//path: user.id===_user.id?google.maps.SymbolPath.FORWARD_CLOSED_ARROW:google.maps.SymbolPath.CIRCLE,
-			path: google.maps.SymbolPath.CIRCLE,
+			path: user.id===_user.id?google.maps.SymbolPath.FORWARD_CLOSED_ARROW:google.maps.SymbolPath.CIRCLE,
 			scale: 6,
 			rotation: heading,
 			strokeColor: 'red',//"#"+_user.color, //everybody should have a different color?

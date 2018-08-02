@@ -68,6 +68,10 @@ function startGPS() { //coming in from main.js only once with roomHash (room nam
         //The get call generates user prompt for location here.
 		navigator.geolocation.getCurrentPosition(setPos,showError); //uses default options
         navigator.geolocation.watchPosition(updatePos,errorPos,posOptions);
+        //heading stuff
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', deviceOrientationHandler, true)
+        }
         
         console.log("App Enabled - uuid set");
         
@@ -81,9 +85,9 @@ function errorPos(err){ console.log(err) }
 function updatePos(args)	{
 
     // null on pc ... so need to test on phone.
-    console.log(args.coords.heading)
-    if(args.coords.heading!==null)
-        $("#testHeading").html(args.coords.heading);
+    //console.log(args.coords.heading)
+    //if(args.coords.heading!==null)
+    //    $("#testHeading").html(args.coords.heading);
 
     //TODO: trace this calculation... if no location change do not update database
     if(
@@ -142,6 +146,51 @@ function setPos(args){  // occurs once uuid set
     //Next call should fire child_added event
     saveUserToDatabase();
       
+}
+
+//alpha handled differently on android and ios??
+var initialOffsetHeading = null;
+
+function deviceOrientationHandler(event) {
+    var a = 0;
+
+    //for android (starting heading... alpha based off that)
+    if(initialOffsetHeading===null) initialOffsetHeading=event.alpha;
+
+    if (event.webkitCompassHeading) {//mobile safari
+        a = event.webkitCompassHeading;
+        //heading = a; // ?? no idea how safari works
+    } else {
+        if (!event.alpha) {
+            a = 0;
+        }
+        else{
+            a = event.alpha;
+        }
+
+        //heading = (360-a) + initialOffsetHeading;
+    }
+    heading = 360-(a-initialOffsetHeading);
+    $("#testHeading").html(initialOffsetHeading);
+    userMarkers[user.id].icon.rotation = heading;
+    userMarkers[user.id].setIcon(userMarkers[user.id].icon);
+
+    /*
+   if(user){
+       //set icon rotation in real time with heading
+       // Variables
+       var	dbgHeadingCorrection=	$("#dbg_heading").val();
+       
+        if(dbgHeadingCorrection== "")
+            dbgHeadingCorrection=	0;
+        else
+            dbgHeadingCorrection=	Number(dbgHeadingCorrection);
+       
+       userMarkers[user.id].icon.rotation = (heading-dbgHeadingCorrection)%360;
+       userMarkers[user.id].setIcon(userMarkers[user.id].icon);
+   }
+   */
+    
 }
 
 //hit the database
