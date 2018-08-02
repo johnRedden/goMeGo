@@ -53,9 +53,7 @@ function updateMap(_user)	{
 	//map.setCenter(bounds.getCenter());
 	map.fitBounds(bounds);
 	if(user.id===_user.id){
-		console.log('yes')
 		map.setZoom(15);
-
 	}
 
 }

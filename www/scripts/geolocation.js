@@ -46,12 +46,12 @@ $(document).ready(function(){
 https://developer.mozilla.org/en-US/docs/Web/API/PositionOptions
 */
 posOptions = {
-  enableHighAccuracy: false, //less battery usage (default false)
+  enableHighAccuracy: true, //less battery usage if false (default false)
   timeout: 5000,  //must return within 5 seconds (defalault 'Infinity' won't return until location avail)
   maximumAge: 0  //0 means do not use cached position
 };
 function startGPS() { //coming in from main.js only once with roomHash (room name) set
-    if(navigator.geolocation)	{ //Q: generates user prompt for location here?
+    if(navigator.geolocation)	{ 
         
         // This should generate a random color but with darkish tones to contrast the white, green, blue, and tan colors of the google map
         /*userColor=  localStorage.getItem("color") || (function()    {
@@ -64,8 +64,9 @@ function startGPS() { //coming in from main.js only once with roomHash (room nam
             localStorage.setItem("uuid", _uuid);
             return _uuid;
         })();  //Global unique user id (uuid) now set and in local storage
-
-		navigator.geolocation.getCurrentPosition(setPos); //uses default options
+        
+        //The get call generates user prompt for location here.
+		navigator.geolocation.getCurrentPosition(setPos,showError); //uses default options
         navigator.geolocation.watchPosition(updatePos,errorPos,posOptions);
         
         console.log("App Enabled - uuid set");
@@ -78,6 +79,11 @@ function startGPS() { //coming in from main.js only once with roomHash (room nam
 }
 function errorPos(err){ console.log(err) }
 function updatePos(args)	{
+
+    // null on pc ... so need to test on phone.
+    console.log(args.coords.heading)
+    $("#testHeading").html(args.coords.heading);
+
     //TODO: trace this calculation... if no location change do not update database
     if(
 		Math.floor(100005*user.lat)== Math.floor(100005*args.coords.latitude) &&
@@ -94,6 +100,24 @@ function updatePos(args)	{
     //next call should fire child_changed event
     saveUserToDatabase();
 
+}
+function showError(error) {
+    //TODO: alert user of the problem
+    //TODO: allow user to easily change location sharing options
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            console.log("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            console.log("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            console.log( "The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            console.log( "An unknown error occurred.");
+            break;
+    }
 }
 
 function setPos(args){  // occurs once uuid set
